@@ -13,6 +13,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 - 一插件一仓库，通常命名 `utools-fun<功能>`；对用户使用稳定的中文显示名及 `FunX` 英文名。仓库名、显示名、uTools 搜索词各有用途，改名时分别核对。
 - 本地优先，核心操作尽量接入 uTools 主搜索框。`utools/plugin.json` 的 `features[].code`、`cmds`、文件/选中文字入口应与实际 `onPluginEnter` 路由一致；动态功能另检查 `setFeature`/`removeFeature` 的生命周期。
 - `utools/` 是插件根目录：`plugin.json` 引用的 `main`、`logo`、可选 `preload` 和功能图标必须真实存在。需要宿主/Node 能力时通过 preload 暴露有限接口，在边界校验文件、URL 和外部数据。UI 依现有项目选 Vue 3/TypeScript/Vite 或原生 HTML/CSS/JS；不要为统一技术栈重写原生插件。
+- 每个插件仓库根目录提供 `build.sh`，作为开发和 CI 共用的检查与打包目录准备入口；至少执行项目现有检查，并核对 `utools/plugin.json` 引用的资源及版本。按项目技术栈实现：原生插件可直接检查现成的 `utools/`，Vue 插件需构建其产物。CI 和 Release 均调用 `sh build.sh`，环境依赖较重的集成测试可单列步骤。
 - 根据数据性质选择存储。`dbStorage` 参与 uTools 同步，不能把它称为“仅本机”；持久化格式变更要保留迁移与失败保护，避免空数据覆盖旧数据。涉及密钥、备份、外部服务时，在界面和 README 中写清同步、明文与联网行为。
 - 调整 UI 时检查常用 uTools 窗口、窄窗口、浅色/深色、键盘与焦点。`pluginSetting.height` 是实际窗口高度，不存在全组织统一高度；截图视口与该值一致，默认内容不应无意溢出。
 
@@ -33,7 +34,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 
 | 变更 | 必须核对的地方 |
 | --- | --- |
-| 新插件 | 仓库与 README、品牌图、`utools/plugin.json`、入口实现、测试/CI、截图、身份配置与发布链路、两个组织索引、`packages` 清单及页面 |
+| 新插件 | 仓库与 README、品牌图、`utools/plugin.json`、入口实现、根目录 `build.sh`、测试/CI、截图、身份配置与发布链路、两个组织索引、`packages` 清单及页面 |
 | 显示名/功能/唤起词变化 | `pluginName`、`description`、`features`、入口路由、界面文字、README、截图文案、组织索引、`packages` 的 `app` 与页面文案 |
 | 图标或界面变化 | `farfarfun/.github/brand` 品牌源及导出图、插件仓库的 `utools/` 图标、界面与 README 引用、截图脚本/PNG、`packages` 页面截图链接与说明 |
 | 存储/联网变化 | 数据迁移与恢复测试、权限与校验、README 隐私说明、组织索引“数据在哪”、包页相关文案 |
