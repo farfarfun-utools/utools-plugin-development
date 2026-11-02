@@ -18,8 +18,8 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 
 ## 名称、图标与尺寸
 
-- 新插件先在 `farfarfun/.github/brand/gen_logos.py` 增加主体，再由品牌生成流程产出素材；不要直接改生成的 `brand/svg/`、`brand/png/`、`brand/favicon/`。品牌规范见该仓库的 `brand/README.md`。
-- `utools/logo.png` 使用 `brand/png/mark/<插件名>-256.png`：透明底、256×256 PNG。`plugin.json#logo` 指向它；额外功能图标按需配置并放在 `utools/`，现有 `search.png` 有 200×200 和 256×256 两种，不套用主图标尺寸。若界面页眉、favicon、`public/logo.png` 或 README 引用同一品牌，也一并核对。
+- 所有插件的品牌图标由 `farfarfun/.github/brand` 统一设计、维护和导出，它是唯一源。新插件或改品牌时先在该仓库按 `brand/README.md` 修改 `brand/gen_logos.py` 并生成素材，再同步导出图到插件仓库；不要在插件仓库另绘品牌图标，也不要直接改品牌仓库生成的 `brand/svg/`、`brand/png/`、`brand/favicon/`。
+- `utools/logo.png` 复制品牌仓库的 `brand/png/mark/<插件名>-256.png`：透明底、256×256 PNG。`plugin.json#logo` 指向它；额外功能图标按需配置并放在 `utools/`，现有 `search.png` 有 200×200 和 256×256 两种，不套用主图标尺寸。若界面页眉、favicon、`public/logo.png` 或 README 引用同一品牌，也一并核对。
 - 组织索引使用 `brand/png/mark/<插件名>-64.png`，即 64×64 PNG。品牌母版为 1024×1024；不要把 64 px 索引图拿来作插件的 256 px 图标。
 - 窗口高度在 `plugin.json#pluginSetting.height` 按功能确定；当前项目为 558–720 CSS px，不能当成平台强制范围。截图通常以 800 CSS px 宽和实际窗口高度拍摄，并检查约 375 CSS px 的窄窗口；缩放倍率及最终 PNG 尺寸以项目截图脚本为准。`packages` 页面截图只认 PNG，没有统一宽高要求。
 
@@ -29,7 +29,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 | --- | --- |
 | 新插件 | 仓库与 README、品牌图、`utools/plugin.json`、入口实现、测试/CI、截图、身份配置与发布链路、两个组织索引、`packages` 清单及页面 |
 | 显示名/功能/唤起词变化 | `pluginName`、`description`、`features`、入口路由、界面文字、README、截图文案、组织索引、`packages` 的 `app` 与页面文案 |
-| 图标或界面变化 | 品牌源及导出图、`utools/` 图标、界面与 README 引用、截图脚本/PNG、`packages` 页面截图链接与说明 |
+| 图标或界面变化 | `farfarfun/.github/brand` 品牌源及导出图、插件仓库的 `utools/` 图标、界面与 README 引用、截图脚本/PNG、`packages` 页面截图链接与说明 |
 | 存储/联网变化 | 数据迁移与恢复测试、权限与校验、README 隐私说明、组织索引“数据在哪”、包页相关文案 |
 | 版本/正式发布 | `package.json` 与 `plugin.json` 版本、锁文件（依仓库工具）、`vX.Y.Z` tag、CI/Release、UPXS 文件名、`SHA256SUMS`、Release 说明及页面下载状态 |
 
