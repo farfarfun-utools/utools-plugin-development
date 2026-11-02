@@ -45,7 +45,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 ## 截图、索引与包页
 
 - 将实际界面 PNG 放在插件仓库 `docs/screenshots/`，用可复现的演示数据生成；不要含真实密钥、API Key 或私人资料。视觉变更后更新受影响截图和 README 引用。现有 Vue 插件多用 `scripts/screenshots.mjs` 与共享截图工作流；可复用 `utools-shots` 的既有脚本，原生插件按自己的页面制作真实截图。
-- 新增、删除、改名或调整插件职责时，同步 `farfarfun-utools/utools-plugins/README.md` 索引表和 `farfarfun-utools/.github/profile/README.md` 插件总览。检查显示名、唤起方式、数据位置、品牌 64 px 图 URL、产品页链接；这两个表当前仍漏列 FunImage/FunVideo，不能把它们当作完整清单。
+- 新增、删除、改名或调整插件职责时，同步 `farfarfun-utools/utools-plugins/README.md` 索引表和 `farfarfun-utools/.github/profile/README.md` 插件总览。检查显示名、唤起方式、数据位置、品牌 64 px 图 URL、产品页链接。
 - 在 `farfarfun/packages/packages.toml` 添加 `[[source]]`，`repo = "farfarfun-utools/<仓库名>"`、`keep = 3`、`[source.utools]` 的 `app` 和英文 `desc`。`app` 对应 uTools 显示名；仅在确实上架插件市场时设置 `store = true`。uTools 插件不进入 APT/Homebrew。
 - 在 `farfarfun/packages/site/pages/<仓库名>.toml` 写中英名称、标语、简介、功能点、安装说明，以及指向插件仓库 PNG 的 `[[shots]]`（含中英 `alt`）。页面文件不是站点展示的技术前提，但组织现有 7 个包页都维护了它；新插件按这条产品展示约定补齐。字段和自检以 `farfarfun/packages/docs/package-spec.md` 为准。
 - 包站点只索引正式 GitHub Release 的附件，不复制插件源码，也不替插件打包。首次接入和发版后在 `packages` 工作流中检查页面、截图和 `.upxs` 下载；站点定时扫描新 Release，需立刻刷新可手动触发其 `build.yml`。
