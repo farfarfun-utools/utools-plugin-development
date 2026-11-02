@@ -10,10 +10,11 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 ## 工作区与实现
 
 - 插件仓库放在 `/home/bingtao/workspace/github/farfarfun-utools/<仓库名>`；新建或克隆前检查同名目录及远端。`.local-backups/` 不是开发目录。共享打包工具在相邻的 `farfarfun-action/utools-devtools`，不要重新克隆到本组织。
-- 一插件一仓库，通常命名 `utools-fun<功能>`；对用户使用稳定的中文显示名及 `FunX` 英文名。仓库名、显示名、uTools 搜索词各有用途，改名时分别核对。
+- 一插件一仓库，通常命名 `utools-fun<功能>`，`package.json#name` 使用 `@farfarfun/utools-fun<功能>`；对用户使用稳定的中文显示名及 `FunX` 英文名。仓库名、npm 包名、显示名、uTools 搜索词各有用途，改名时分别核对。
 - 本地优先，核心操作尽量接入 uTools 主搜索框。`utools/plugin.json` 的 `features[].code`、`cmds`、文件/选中文字入口应与实际 `onPluginEnter` 路由一致；动态功能另检查 `setFeature`/`removeFeature` 的生命周期。
 - `utools/` 是插件运行目录：`plugin.json` 的 `main` 指向构建产物 `dist/index.html`，`logo`、可选 `preload` 和功能图标必须真实存在。所有插件都作为有构建步骤的前端应用，前端源码放在运行目录外，由 Vite 构建到 `utools/dist/`；只有构建后的目录可导入或打包。现有 Vue 3/TypeScript 项目沿用其技术栈，已有原生 HTML/CSS/JS 可保留业务代码并接入 Vite。需要宿主/Node 能力时通过 preload 暴露有限接口，在边界校验文件、URL 和外部数据。
 - 每个插件仓库根目录提供 `build.sh`，作为开发、CI 和 Release 共用的唯一项目构建入口：依次安装锁定依赖、运行语法/类型/静态检查和单元测试、生成 `utools/dist/`，并核对清单版本及引用资源。工作流不再直接写 `pnpm build/test/lint/typecheck` 或 `npm run check/test`，也不以跳过脚本内检查再在工作流补跑的方式拆散入口；浏览器、FFmpeg 等额外测试由工作流准备环境，再通过 `build.sh` 的明确开关触发。版本/tag、身份与 Secrets 校验、UPXS 打包和发布仍由工作流负责。
+- `funbuild build` 的项目构建命令设为 `funbuild.build = "sh build.sh"`。当前 funbuild 只自动更新 `package.json` 版本，不同步 `utools/plugin.json` 或 npm 锁文件；发版前手动把三处版本同步，并运行 `funbuild build --version <版本>`。它会提交所有工作区改动、推送并强制更新 tag；必须先确认工作区没有无关改动，且仅在允许本机构建的环境使用。本工作区要求的 GitHub Actions 构建/打包仍按上条执行。
 - 根据数据性质选择存储。`dbStorage` 参与 uTools 同步，不能把它称为“仅本机”；持久化格式变更要保留迁移与失败保护，避免空数据覆盖旧数据。涉及密钥、备份、外部服务时，在界面和 README 中写清同步、明文与联网行为。
 - 调整 UI 时检查常用 uTools 窗口、窄窗口、浅色/深色、键盘与焦点。`pluginSetting.height` 是实际窗口高度，不存在全组织统一高度；截图视口与该值一致，默认内容不应无意溢出。
 
@@ -38,7 +39,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 | 显示名/功能/唤起词变化 | `pluginName`、`description`、`features`、入口路由、界面文字、README、截图文案、组织索引、`packages` 的 `app` 与页面文案 |
 | 图标或界面变化 | `farfarfun/.github/brand` 品牌源及导出图、插件仓库的 `utools/` 图标、界面与 README 引用、截图脚本/PNG、`packages` 页面截图链接与说明 |
 | 存储/联网变化 | 数据迁移与恢复测试、权限与校验、README 隐私说明、组织索引“数据在哪”、包页相关文案 |
-| 版本/正式发布 | `package.json` 与 `plugin.json` 版本、锁文件（依仓库工具）、`vX.Y.Z` tag、CI/Release、UPXS 文件名、`SHA256SUMS`、Release 说明及页面下载状态 |
+| 版本/正式发布 | `package.json` 的 `@farfarfun/*` 包名及版本、`plugin.json` 版本、锁文件（依仓库工具）、`vX.Y.Z` tag、CI/Release、UPXS 文件名、`SHA256SUMS`、Release 说明及页面下载状态 |
 
 按变化核对即可；纯内部改动不必重做品牌、截图或包页。新增插件和首次公开发布须完成完整链路，不能以已有仓库尚缺某项为理由省略。
 
