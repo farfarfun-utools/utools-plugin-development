@@ -19,7 +19,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 ## 名称、图标与尺寸
 
 - 新插件先在 `farfarfun/.github/brand/gen_logos.py` 增加主体，再由品牌生成流程产出素材；不要直接改生成的 `brand/svg/`、`brand/png/`、`brand/favicon/`。品牌规范见该仓库的 `brand/README.md`。
-- `utools/logo.png` 使用 `brand/png/mark/<插件名>-256.png`：透明底、256×256 PNG。`plugin.json#logo` 指向它；额外功能图标按需配置并放在 `utools/`。若界面页眉、favicon、`public/logo.png` 或 README 引用同一品牌，也一并核对。
+- `utools/logo.png` 使用 `brand/png/mark/<插件名>-256.png`：透明底、256×256 PNG。`plugin.json#logo` 指向它；额外功能图标按需配置并放在 `utools/`，现有 `search.png` 有 200×200 和 256×256 两种，不套用主图标尺寸。若界面页眉、favicon、`public/logo.png` 或 README 引用同一品牌，也一并核对。
 - 组织索引使用 `brand/png/mark/<插件名>-64.png`，即 64×64 PNG。品牌母版为 1024×1024；不要把 64 px 索引图拿来作插件的 256 px 图标。
 - 窗口高度在 `plugin.json#pluginSetting.height` 按功能确定；当前项目为 558–720 CSS px，不能当成平台强制范围。截图通常以 800 CSS px 宽和实际窗口高度拍摄，并检查约 375 CSS px 的窄窗口；缩放倍率及最终 PNG 尺寸以项目截图脚本为准。`packages` 页面截图只认 PNG，没有统一宽高要求。
 
