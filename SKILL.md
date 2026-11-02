@@ -13,7 +13,7 @@ description: 开发或发布 farfarfun-utools 组织的 uTools 插件时，检�
 - 一插件一仓库，通常命名 `utools-fun<功能>`；对用户使用稳定的中文显示名及 `FunX` 英文名。仓库名、显示名、uTools 搜索词各有用途，改名时分别核对。
 - 本地优先，核心操作尽量接入 uTools 主搜索框。`utools/plugin.json` 的 `features[].code`、`cmds`、文件/选中文字入口应与实际 `onPluginEnter` 路由一致；动态功能另检查 `setFeature`/`removeFeature` 的生命周期。
 - `utools/` 是插件根目录：`plugin.json` 引用的 `main`、`logo`、可选 `preload` 和功能图标必须真实存在。需要宿主/Node 能力时通过 preload 暴露有限接口，在边界校验文件、URL 和外部数据。UI 依现有项目选 Vue 3/TypeScript/Vite 或原生 HTML/CSS/JS；不要为统一技术栈重写原生插件。
-- 每个插件仓库根目录提供 `build.sh`，作为开发和 CI 共用的检查与打包目录准备入口；至少执行项目现有检查，并核对 `utools/plugin.json` 引用的资源及版本。按项目技术栈实现：原生插件可直接检查现成的 `utools/`，Vue 插件需构建其产物。CI 和 Release 均调用 `sh build.sh`，环境依赖较重的集成测试可单列步骤。
+- 每个插件仓库根目录提供 `build.sh`，作为开发、CI 和 Release 共用的唯一项目构建入口：依次安装锁定依赖（若有）、运行语法/类型/静态检查和单元测试、生成 `utools/` 产物，并核对清单版本及引用资源。按项目技术栈实现：原生插件检查现成的 `utools/`，Vue 插件构建其产物。工作流不再直接写 `pnpm build/test/lint/typecheck` 或 `npm run check/test`，也不以跳过脚本内检查再在工作流补跑的方式拆散入口；浏览器、FFmpeg 等额外测试由工作流准备环境，再通过 `build.sh` 的明确开关触发。版本/tag、身份与 Secrets 校验、UPXS 打包和发布仍由工作流负责。
 - 根据数据性质选择存储。`dbStorage` 参与 uTools 同步，不能把它称为“仅本机”；持久化格式变更要保留迁移与失败保护，避免空数据覆盖旧数据。涉及密钥、备份、外部服务时，在界面和 README 中写清同步、明文与联网行为。
 - 调整 UI 时检查常用 uTools 窗口、窄窗口、浅色/深色、键盘与焦点。`pluginSetting.height` 是实际窗口高度，不存在全组织统一高度；截图视口与该值一致，默认内容不应无意溢出。
 
